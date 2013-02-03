@@ -7,7 +7,18 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @movies = case params[:sort]
+	when "title" then
+		@highlight="title"		
+		@sort == "title"
+		Movie.find(:all, :order => "title")
+	when "release_date" then 
+		@highlight="release_date"		
+		@sort == "release_date"
+		Movie.find(:all, :order => "release_date")
+	else Movie.all
+     end	
+
   end
 
   def new
